@@ -9,5 +9,6 @@ target 'Nequore' do
 
   pod 'Alamofire'
   pod 'SwiftyJSON'
+  pod 'AlamofireImage'
 
 end

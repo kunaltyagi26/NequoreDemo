@@ -14,14 +14,21 @@ class RowCell: UITableViewCell {
     
     var cellDetails: [Recommended]?
     
-    override func awakeFromNib() {
+    /*override func awakeFromNib() {
         collectionView.delegate = self
         collectionView.dataSource = self
+    }*/
+    
+    func setCollectionViewDataSourceDelegate(dataSourceDelegate: UICollectionViewDataSource & UICollectionViewDelegate, forRow row: Int) {
+        collectionView.delegate = dataSourceDelegate
+        collectionView.dataSource = dataSourceDelegate
+        collectionView.tag = row
+        collectionView.reloadData()
     }
 }
 
 
-extension RowCell: UICollectionViewDelegate, UICollectionViewDataSource {
+/*extension RowCell: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 12
     }
@@ -42,4 +49,4 @@ extension RowCell: UICollectionViewDelegateFlowLayout {
         let itemHeight = collectionView.bounds.height - (2 * padding)
         return CGSize(width: itemWidth, height: itemHeight)
     }
-}
+}*/

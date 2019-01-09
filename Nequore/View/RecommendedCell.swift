@@ -16,10 +16,10 @@ class RecommendedCell: UICollectionViewCell {
     @IBOutlet weak var desc: UILabel!
     @IBOutlet weak var price: UILabel!
     
-    func configureCell(image: UIImage, address: String, description: String, price: String) {
+    func configureCell(image: UIImage, address: String, description: String, price: Int) {
         self.image.image = image
         self.addressLabel.text = address
         self.desc.text = description
-        self.price.text = price
+        self.price.text = "\(price)"
     }
 }

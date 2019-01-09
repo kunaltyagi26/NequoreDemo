@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Alamofire
+import AlamofireImage
 
 class HomeVC: UIViewController {
 
@@ -33,6 +35,7 @@ class HomeVC: UIViewController {
             
             guard let reco = self.data?.recommended else { return }
             self.recommended = reco
+            print(self.recommended.count)
             
             guard let topDev = self.data?.topDevelopers else { return }
             self.topDevelopers = topDev
@@ -84,8 +87,6 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    
-    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 80
     }
@@ -94,6 +95,44 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "headerCell") as? HeaderCell else { return UITableViewCell() }
         cell.configureCell(category: categories[section])
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+         guard let cell = tableView.dequeueReusableCell(withIdentifier: "rowCell") as? RowCell else { return }
+        cell.setCollectionViewDataSourceDelegate(dataSourceDelegate: self, forRow: indexPath.row)
+    }
+}
+
+extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return recommended.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let recommendedObj = recommended[indexPath.row]
+        var img = UIImage()
+        
+        Alamofire.request(recommendedObj.image!).responseImage { (response) in
+            guard let image = response.result.value else { return }
+            img = image
+        }
+        
+        print((recommendedObj.city?.nameEn)!)
+        
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "recommendedCell", for: indexPath) as? RecommendedCell else { return UICollectionViewCell() }
+        cell.configureCell(image: img, address: (recommendedObj.city?.nameEn)!, description: recommendedObj.descriptionValue!, price: recommendedObj.maxPrice!)
+        return cell
+    }
+    
+}
+
+extension HomeVC: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let itemsPerRow:CGFloat = 2
+        let padding:CGFloat = 5
+        let itemWidth = (collectionView.bounds.width / itemsPerRow) - padding
+        let itemHeight = collectionView.bounds.height - (2 * padding)
+        return CGSize(width: itemWidth, height: itemHeight)
     }
 }
 
