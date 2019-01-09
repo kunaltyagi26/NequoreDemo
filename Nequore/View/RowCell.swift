@@ -9,16 +9,37 @@
 import UIKit
 
 class RowCell: UITableViewCell {
-
+    
+    @IBOutlet weak var collectionView: UICollectionView!
+    
+    var cellDetails: [Recommended]?
+    
     override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+        collectionView.delegate = self
+        collectionView.dataSource = self
     }
+}
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
 
-        // Configure the view for the selected state
+extension RowCell: UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 12
     }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "recommendedCell", for: indexPath) as? RecommendedCell else { return UICollectionViewCell() }
+        //cell.configureCell(image: <#T##UIImage#>, address: <#T##String#>, description: <#T##String#>, price: <#T##String#>)
+        return cell
+    }
+    
+}
 
+extension RowCell: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let itemsPerRow:CGFloat = 2
+        let padding:CGFloat = 5
+        let itemWidth = (collectionView.bounds.width / itemsPerRow) - padding
+        let itemHeight = collectionView.bounds.height - (2 * padding)
+        return CGSize(width: itemWidth, height: itemHeight)
+    }
 }
