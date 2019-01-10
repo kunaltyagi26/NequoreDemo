@@ -11,11 +11,11 @@ import Alamofire
 import AlamofireImage
 
 class HomeVC: UIViewController {
-
+    
     @IBOutlet weak var tableView: UITableView!
     
     var categories: [String] = ["Recommended", "Top Developers", "Pre-Sales", "Popular Projects", "Featured Localities"]
-
+    
     var data: Data?
     var recommended: [Recommended] = []
     var topDevelopers: [TopDevelopers] = []
@@ -30,10 +30,6 @@ class HomeVC: UIViewController {
         
         tableView.delegate = self
         tableView.dataSource = self
-        
-        fetchImages { (completed) in
-            
-        }
         
         DataService.instance.getData { (completion, data) in
             self.data = data
@@ -52,20 +48,8 @@ class HomeVC: UIViewController {
             
             guard let featLoc = self.data?.featuredLocalities else { return }
             self.featuredLocalities = featLoc
-        }
-    }
-    
-    func fetchImages(completion: @escaping (_ status: Bool)-> ()) {
-        for reco in recommended {
-            Alamofire.request(reco.image!).responseImage { (response) in
-                guard let image = response.result.value else { return }
-                self.images.append(image)
-                print(self.images.count)
-                if self.images.count == self.recommended.count {
-                    completion(true)
-                    print("Done")
-                }
-            }
+            
+            self.tableView.reloadData()
         }
     }
 }
@@ -111,11 +95,6 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
         cell.configureCell(category: categories[section])
         return cell
     }
-    
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-         guard let cell = tableView.dequeueReusableCell(withIdentifier: "rowCell") as? RowCell else { return }
-        //cell.setCollectionViewDataSourceDelegate(dataSourceDelegate: self, forRow: indexPath.row)
-    }
 }
 
 extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -125,15 +104,11 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let recommendedObj = recommended[indexPath.row]
-        var img = UIImage()
-        
-        /*Alamofire.request(recommendedObj.image!).responseImage { (response) in
-            guard let image = response.result.value else { return }
-            img = image
-        }*/
         
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "recommendedCell", for: indexPath) as? RecommendedCell else { return UICollectionViewCell() }
-        cell.configureCell(image: img, address: (recommendedObj.city?.nameEn)!, description: recommendedObj.descriptionValue!, price: recommendedObj.maxPrice!)
+        cell.section = indexPath.section
+        
+        cell.configureCell(imageUrl: URL(string: recommendedObj.image ?? "https://httpbin.org/image/png")!, address: (recommendedObj.city?.nameEn)!, description: recommendedObj.descriptionValue!, price: recommendedObj.maxPrice!)
         return cell
     }
     
@@ -141,9 +116,8 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
 
 extension HomeVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let itemsPerRow:CGFloat = 2
         let padding:CGFloat = 5
-        let itemWidth = (collectionView.bounds.width / itemsPerRow) - padding
+        let itemWidth = self.view.bounds.width * 0.7
         let itemHeight = collectionView.bounds.height - (2 * padding)
         return CGSize(width: itemWidth, height: itemHeight)
     }

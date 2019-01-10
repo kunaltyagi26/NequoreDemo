@@ -13,7 +13,6 @@
 		2BA1010B21E4E4820063E6F2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2BA1010A21E4E4820063E6F2 /* Assets.xcassets */; };
 		2BA1010E21E4E4820063E6F2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2BA1010C21E4E4820063E6F2 /* LaunchScreen.storyboard */; };
 		2BA1011921E509A80063E6F2 /* RowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BA1011821E509A80063E6F2 /* RowCell.swift */; };
-		2BA1011B21E50B860063E6F2 /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BA1011A21E50B860063E6F2 /* CategoryCell.swift */; };
 		2BD3911921E61634009FF0F7 /* HeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BD3911821E61634009FF0F7 /* HeaderCell.swift */; };
 		2BD3913021E61907009FF0F7 /* PopularProjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BD3911A21E61905009FF0F7 /* PopularProjects.swift */; };
 		2BD3913121E61907009FF0F7 /* Developer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BD3911B21E61905009FF0F7 /* Developer.swift */; };
@@ -40,6 +39,7 @@
 		2BD3914821E61950009FF0F7 /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BD3914721E61950009FF0F7 /* DataService.swift */; };
 		2BD3914A21E62146009FF0F7 /* API_JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BD3914921E62146009FF0F7 /* API_JSON.swift */; };
 		2BD3914C21E63EFA009FF0F7 /* RecommendedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BD3914B21E63EFA009FF0F7 /* RecommendedCell.swift */; };
+		2BD3914E21E77863009FF0F7 /* TopDevelopersCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BD3914D21E77863009FF0F7 /* TopDevelopersCell.swift */; };
 		F8E18D28A0264DE8F657C19B /* Pods_Nequore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F83A363FD42F9FC9A962C658 /* Pods_Nequore.framework */; };
 /* End PBXBuildFile section */
 
@@ -52,7 +52,6 @@
 		2BA1010D21E4E4820063E6F2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2BA1010F21E4E4820063E6F2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2BA1011821E509A80063E6F2 /* RowCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RowCell.swift; sourceTree = "<group>"; };
-		2BA1011A21E50B860063E6F2 /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
 		2BD3911821E61634009FF0F7 /* HeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderCell.swift; sourceTree = "<group>"; };
 		2BD3911A21E61905009FF0F7 /* PopularProjects.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopularProjects.swift; sourceTree = "<group>"; };
 		2BD3911B21E61905009FF0F7 /* Developer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Developer.swift; sourceTree = "<group>"; };
@@ -79,6 +78,7 @@
 		2BD3914721E61950009FF0F7 /* DataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
 		2BD3914921E62146009FF0F7 /* API_JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API_JSON.swift; sourceTree = "<group>"; };
 		2BD3914B21E63EFA009FF0F7 /* RecommendedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendedCell.swift; sourceTree = "<group>"; };
+		2BD3914D21E77863009FF0F7 /* TopDevelopersCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopDevelopersCell.swift; sourceTree = "<group>"; };
 		860E7C115741F5766FC6E295 /* Pods-Nequore.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nequore.release.xcconfig"; path = "Target Support Files/Pods-Nequore/Pods-Nequore.release.xcconfig"; sourceTree = "<group>"; };
 		8FDF860B2B92BBA85101546E /* Pods-Nequore.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nequore.debug.xcconfig"; path = "Target Support Files/Pods-Nequore/Pods-Nequore.debug.xcconfig"; sourceTree = "<group>"; };
 		F83A363FD42F9FC9A962C658 /* Pods_Nequore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Nequore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -172,9 +172,9 @@
 			isa = PBXGroup;
 			children = (
 				2BA1011821E509A80063E6F2 /* RowCell.swift */,
-				2BA1011A21E50B860063E6F2 /* CategoryCell.swift */,
 				2BD3911821E61634009FF0F7 /* HeaderCell.swift */,
 				2BD3914B21E63EFA009FF0F7 /* RecommendedCell.swift */,
+				2BD3914D21E77863009FF0F7 /* TopDevelopersCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -337,6 +337,7 @@
 				2BD3914A21E62146009FF0F7 /* API_JSON.swift in Sources */,
 				2BD3913921E61907009FF0F7 /* CarpetAreas.swift in Sources */,
 				2BD3913E21E61907009FF0F7 /* FeaturedLocalities.swift in Sources */,
+				2BD3914E21E77863009FF0F7 /* TopDevelopersCell.swift in Sources */,
 				2BD3914421E61907009FF0F7 /* PropertyType.swift in Sources */,
 				2BA1010621E4E47E0063E6F2 /* HomeVC.swift in Sources */,
 				2BD3911921E61634009FF0F7 /* HeaderCell.swift in Sources */,
@@ -351,7 +352,6 @@
 				2BD3913321E61907009FF0F7 /* Configurations.swift in Sources */,
 				2BD3914021E61907009FF0F7 /* Config.swift in Sources */,
 				2BD3913C21E61907009FF0F7 /* Images.swift in Sources */,
-				2BA1011B21E50B860063E6F2 /* CategoryCell.swift in Sources */,
 				2BD3913021E61907009FF0F7 /* PopularProjects.swift in Sources */,
 				2BD3914121E61907009FF0F7 /* Recommended.swift in Sources */,
 				2BD3913D21E61907009FF0F7 /* Data.swift in Sources */,

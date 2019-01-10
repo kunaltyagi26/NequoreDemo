@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AlamofireImage
 
 class RecommendedCell: UICollectionViewCell {
     
@@ -16,10 +17,14 @@ class RecommendedCell: UICollectionViewCell {
     @IBOutlet weak var desc: UILabel!
     @IBOutlet weak var price: UILabel!
     
-    func configureCell(image: UIImage, address: String, description: String, price: Int) {
-        self.image.image = image
+    var section: Int = 0
+    
+    func configureCell(imageUrl: URL, address: String, description: String, price: Int) {
+        self.image.af_setImage(withURL: imageUrl)
         self.addressLabel.text = address
         self.desc.text = description
         self.price.text = "\(price)"
+        
+        addressView.layer.cornerRadius = 15
     }
 }
