@@ -22,7 +22,8 @@ class HomeVC: UIViewController {
     var preSale: [PreSale] = []
     var popularProjects: [PopularProjects] = []
     var featuredLocalities: [FeaturedLocalities] = []
-    var blogs: [Blogs] = []
+    
+    var images: [UIImage] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,12 +31,15 @@ class HomeVC: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         
+        fetchImages { (completed) in
+            
+        }
+        
         DataService.instance.getData { (completion, data) in
             self.data = data
             
             guard let reco = self.data?.recommended else { return }
             self.recommended = reco
-            print(self.recommended.count)
             
             guard let topDev = self.data?.topDevelopers else { return }
             self.topDevelopers = topDev
@@ -48,9 +52,20 @@ class HomeVC: UIViewController {
             
             guard let featLoc = self.data?.featuredLocalities else { return }
             self.featuredLocalities = featLoc
-            
-            guard let blog = self.data?.blogs else { return }
-            self.blogs = blog
+        }
+    }
+    
+    func fetchImages(completion: @escaping (_ status: Bool)-> ()) {
+        for reco in recommended {
+            Alamofire.request(reco.image!).responseImage { (response) in
+                guard let image = response.result.value else { return }
+                self.images.append(image)
+                print(self.images.count)
+                if self.images.count == self.recommended.count {
+                    completion(true)
+                    print("Done")
+                }
+            }
         }
     }
 }
@@ -66,7 +81,7 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "rowCell") as? RowCell else { return UITableViewCell() }
-        cell.cellDetails = self.recommended
+        cell.setCollectionViewDataSourceDelegate(dataSourceDelegate: self, forRow: indexPath.row)
         return cell
     }
     
@@ -99,7 +114,7 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
          guard let cell = tableView.dequeueReusableCell(withIdentifier: "rowCell") as? RowCell else { return }
-        cell.setCollectionViewDataSourceDelegate(dataSourceDelegate: self, forRow: indexPath.row)
+        //cell.setCollectionViewDataSourceDelegate(dataSourceDelegate: self, forRow: indexPath.row)
     }
 }
 
@@ -112,12 +127,10 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
         let recommendedObj = recommended[indexPath.row]
         var img = UIImage()
         
-        Alamofire.request(recommendedObj.image!).responseImage { (response) in
+        /*Alamofire.request(recommendedObj.image!).responseImage { (response) in
             guard let image = response.result.value else { return }
             img = image
-        }
-        
-        print((recommendedObj.city?.nameEn)!)
+        }*/
         
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "recommendedCell", for: indexPath) as? RecommendedCell else { return UICollectionViewCell() }
         cell.configureCell(image: img, address: (recommendedObj.city?.nameEn)!, description: recommendedObj.descriptionValue!, price: recommendedObj.maxPrice!)

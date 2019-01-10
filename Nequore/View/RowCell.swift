@@ -12,8 +12,6 @@ class RowCell: UITableViewCell {
     
     @IBOutlet weak var collectionView: UICollectionView!
     
-    var cellDetails: [Recommended]?
-    
     /*override func awakeFromNib() {
         collectionView.delegate = self
         collectionView.dataSource = self
