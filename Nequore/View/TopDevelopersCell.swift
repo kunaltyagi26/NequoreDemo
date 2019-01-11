@@ -10,4 +10,15 @@ import UIKit
 
 class TopDevelopersCell: UICollectionViewCell {
     
+    @IBOutlet weak var image: UIImageView!
+    @IBOutlet weak var numberOfProjects: UILabel!
+    @IBOutlet weak var developer: UILabel!
+    @IBOutlet weak var developerDesc: UILabel!
+    
+    func configureCell(imageUrl: URL, numberOfProjects: Int, developer: String, developerDesc: String) {
+        self.image.af_setImage(withURL: imageUrl)
+        self.numberOfProjects.text = "\(numberOfProjects)"
+        self.developer.text = developer
+        self.developerDesc.text = developerDesc
+    }
 }

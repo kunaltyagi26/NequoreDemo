@@ -13,6 +13,7 @@ public final class TopDevelopers: NSCoding {
   // MARK: Declaration for string constants to be used to decode and also serialize.
   private struct SerializationKeys {
     static let developerTitle = "developer_title"
+    static let developerDesc = "developer_desc"
     static let salePropertyCount = "sale_property_count"
     static let isBlocked = "is_blocked"
     static let approvedPropertyCount = "approved_property_count"
@@ -34,6 +35,7 @@ public final class TopDevelopers: NSCoding {
 
   // MARK: Properties
   public var developerTitle: String?
+  public var developerDesc: String?
   public var salePropertyCount: Int?
   public var isBlocked: Int?
   public var approvedPropertyCount: Int?
@@ -66,6 +68,7 @@ public final class TopDevelopers: NSCoding {
   /// - parameter json: JSON object from SwiftyJSON.
   public required init(json: JSON) {
     developerTitle = json[SerializationKeys.developerTitle].string
+    developerDesc = json[SerializationKeys.developerDesc].string
     salePropertyCount = json[SerializationKeys.salePropertyCount].int
     isBlocked = json[SerializationKeys.isBlocked].int
     approvedPropertyCount = json[SerializationKeys.approvedPropertyCount].int
@@ -91,6 +94,7 @@ public final class TopDevelopers: NSCoding {
   public func dictionaryRepresentation() -> [String: Any] {
     var dictionary: [String: Any] = [:]
     if let value = developerTitle { dictionary[SerializationKeys.developerTitle] = value }
+    if let value = developerDesc { dictionary[SerializationKeys.developerDesc] = value }
     if let value = salePropertyCount { dictionary[SerializationKeys.salePropertyCount] = value }
     if let value = isBlocked { dictionary[SerializationKeys.isBlocked] = value }
     if let value = approvedPropertyCount { dictionary[SerializationKeys.approvedPropertyCount] = value }
@@ -114,6 +118,7 @@ public final class TopDevelopers: NSCoding {
   // MARK: NSCoding Protocol
   required public init(coder aDecoder: NSCoder) {
     self.developerTitle = aDecoder.decodeObject(forKey: SerializationKeys.developerTitle) as? String
+    self.developerDesc = aDecoder.decodeObject(forKey: SerializationKeys.developerDesc) as? String
     self.salePropertyCount = aDecoder.decodeObject(forKey: SerializationKeys.salePropertyCount) as? Int
     self.isBlocked = aDecoder.decodeObject(forKey: SerializationKeys.isBlocked) as? Int
     self.approvedPropertyCount = aDecoder.decodeObject(forKey: SerializationKeys.approvedPropertyCount) as? Int
@@ -135,6 +140,7 @@ public final class TopDevelopers: NSCoding {
 
   public func encode(with aCoder: NSCoder) {
     aCoder.encode(developerTitle, forKey: SerializationKeys.developerTitle)
+    aCoder.encode(developerTitle, forKey: SerializationKeys.developerDesc)
     aCoder.encode(salePropertyCount, forKey: SerializationKeys.salePropertyCount)
     aCoder.encode(isBlocked, forKey: SerializationKeys.isBlocked)
     aCoder.encode(approvedPropertyCount, forKey: SerializationKeys.approvedPropertyCount)
