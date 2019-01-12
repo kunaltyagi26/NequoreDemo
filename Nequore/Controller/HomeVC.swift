@@ -118,9 +118,31 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let recommendedObj = recommended[indexPath.row]
-        let topDev = topDevelopers[indexPath.row]
-        let featLoc = featuredLocalities[indexPath.row]
+        var recommendedObj = recommended[0]
+        if indexPath.row < recommended.count {
+            recommendedObj = recommended[indexPath.row]
+        }
+        
+        var topDev = topDevelopers[0]
+        if indexPath.row < topDevelopers.count{
+            topDev = topDevelopers[indexPath.row]
+        }
+        
+        var preSaleObj = preSale[0]
+        if indexPath.row < preSale.count{
+            preSaleObj = preSale[indexPath.row]
+        }
+        
+        var featLoc = featuredLocalities[0]
+        if indexPath.row < featuredLocalities.count {
+            featLoc = featuredLocalities[indexPath.row]
+        }
+        
+        var popularProj = popularProjects[0]
+        if indexPath.row < popularProjects.count {
+            popularProj = popularProjects[indexPath.row]
+        }
+        
         
         var cell = UICollectionViewCell()
         
@@ -150,11 +172,11 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
             
             cell = recommendedCell
         case 2:
-            guard let recommendedCell = collectionView.dequeueReusableCell(withReuseIdentifier: "recommendedCell", for: indexPath) as? RecommendedCell else { return UICollectionViewCell() }
+            guard let preSalesCell = collectionView.dequeueReusableCell(withReuseIdentifier: "preSalesCell", for: indexPath) as? PreSalesCell else { return UICollectionViewCell() }
             
-            recommendedCell.configureCell(imageUrl: URL(string: recommendedObj.image ?? "https://httpbin.org/image/png")!, address: (recommendedObj.city?.nameEn)!, description: recommendedObj.descriptionValue!, price: recommendedObj.maxPrice!)
+            preSalesCell.configureCell(imageUrl: URL(string: preSaleObj.mainImage ?? "https://httpbin.org/image/png")!, price: (preSaleObj.startingPrice ?? 0) / 1000, desc: preSaleObj.configurations?[0].config?.nameEn ?? "", owner: preSaleObj.name ?? "")
             
-            cell = recommendedCell
+            cell = preSalesCell
         case 3:
             guard let recommendedCell = collectionView.dequeueReusableCell(withReuseIdentifier: "recommendedCell", for: indexPath) as? RecommendedCell else { return UICollectionViewCell() }
             

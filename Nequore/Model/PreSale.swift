@@ -71,7 +71,7 @@ public final class PreSale: NSCoding {
   public var subdomain: String?
   public var createdBy: Int?
   public var locality: Locality?
-  public var startingPrice: Int?
+  public var startingPrice: Double?
   public var adminId: Int?
   public var localityId: Int?
   public var banks: [Banks]?
@@ -115,7 +115,7 @@ public final class PreSale: NSCoding {
     subdomain = json[SerializationKeys.subdomain].string
     createdBy = json[SerializationKeys.createdBy].int
     locality = Locality(json: json[SerializationKeys.locality])
-    startingPrice = json[SerializationKeys.startingPrice].int
+    startingPrice = json[SerializationKeys.startingPrice].double
     adminId = json[SerializationKeys.adminId].int
     localityId = json[SerializationKeys.localityId].int
     if let items = json[SerializationKeys.banks].array { banks = items.map { Banks(json: $0) } }
@@ -187,7 +187,7 @@ public final class PreSale: NSCoding {
     self.subdomain = aDecoder.decodeObject(forKey: SerializationKeys.subdomain) as? String
     self.createdBy = aDecoder.decodeObject(forKey: SerializationKeys.createdBy) as? Int
     self.locality = aDecoder.decodeObject(forKey: SerializationKeys.locality) as? Locality
-    self.startingPrice = aDecoder.decodeObject(forKey: SerializationKeys.startingPrice) as? Int
+    self.startingPrice = aDecoder.decodeObject(forKey: SerializationKeys.startingPrice) as? Double
     self.adminId = aDecoder.decodeObject(forKey: SerializationKeys.adminId) as? Int
     self.localityId = aDecoder.decodeObject(forKey: SerializationKeys.localityId) as? Int
     self.banks = aDecoder.decodeObject(forKey: SerializationKeys.banks) as? [Banks]
