@@ -9,5 +9,17 @@
 import UIKit
 
 class PopularProjectsCell: UICollectionViewCell {
+    @IBOutlet weak var image: UIImageView!
+    @IBOutlet weak var owner: UILabel!
+    @IBOutlet weak var projectName: UILabel!
+    @IBOutlet weak var desc: UILabel!
+    @IBOutlet weak var price: UILabel!
     
+    func configureCell(imageUrl: URL, owner: String, projectName: String, desc: String, price: Double) {
+        self.image.af_setImage(withURL: imageUrl)
+        self.owner.text = owner
+        self.projectName.text = projectName
+        self.desc.text = desc
+        self.price.text = "$ \(price)K"
+    }
 }

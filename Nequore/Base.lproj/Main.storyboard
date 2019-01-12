@@ -262,7 +262,7 @@
                                                                 <outlet property="roundedView" destination="Uf1-LA-Hcg" id="S0L-Xx-K2e"/>
                                                             </connections>
                                                         </collectionViewCell>
-                                                        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="ZUk-CM-0Gk">
+                                                        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="popularProjectsCell" id="ZUk-CM-0Gk" customClass="PopularProjectsCell" customModule="Nequore" customModuleProvider="target">
                                                             <rect key="frame" x="686" y="42" width="222" height="116"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
@@ -272,15 +272,54 @@
                                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tth-Ch-7n7">
                                                                         <rect key="frame" x="0.0" y="0.0" width="89" height="116"/>
                                                                     </imageView>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OaB-nq-N8i">
+                                                                        <rect key="frame" x="97" y="33" width="54" height="25.5"/>
+                                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="21"/>
+                                                                        <nil key="textColor"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YPO-fv-27E">
+                                                                        <rect key="frame" x="97" y="66.5" width="42" height="21"/>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Y3-dd-MKW">
+                                                                        <rect key="frame" x="97" y="91.5" width="48" height="24"/>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                                        <nil key="textColor"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gz7-J3-fsI">
+                                                                        <rect key="frame" x="97" y="8" width="42" height="21"/>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
                                                                 </subviews>
                                                             </view>
                                                             <constraints>
+                                                                <constraint firstItem="OaB-nq-N8i" firstAttribute="leading" secondItem="gz7-J3-fsI" secondAttribute="leading" id="2hy-Rv-nhS"/>
                                                                 <constraint firstItem="tth-Ch-7n7" firstAttribute="top" secondItem="ZUk-CM-0Gk" secondAttribute="top" id="9mJ-Mx-poz"/>
+                                                                <constraint firstItem="6Y3-dd-MKW" firstAttribute="leading" secondItem="YPO-fv-27E" secondAttribute="leading" id="I1d-KD-Tih"/>
+                                                                <constraint firstItem="YPO-fv-27E" firstAttribute="top" secondItem="OaB-nq-N8i" secondAttribute="bottom" constant="8" id="Kue-Nr-YeF"/>
+                                                                <constraint firstItem="YPO-fv-27E" firstAttribute="leading" secondItem="OaB-nq-N8i" secondAttribute="leading" id="LhJ-J7-af1"/>
+                                                                <constraint firstItem="gz7-J3-fsI" firstAttribute="top" secondItem="ZUk-CM-0Gk" secondAttribute="top" constant="8" id="NcL-QJ-MFG"/>
                                                                 <constraint firstAttribute="bottom" secondItem="tth-Ch-7n7" secondAttribute="bottom" id="YmK-Bb-Sis"/>
+                                                                <constraint firstItem="gz7-J3-fsI" firstAttribute="leading" secondItem="tth-Ch-7n7" secondAttribute="trailing" constant="8" id="iTU-8L-MQf"/>
                                                                 <constraint firstItem="tth-Ch-7n7" firstAttribute="width" secondItem="ZUk-CM-0Gk" secondAttribute="width" multiplier="0.4" id="n61-Pc-Vm1"/>
+                                                                <constraint firstItem="6Y3-dd-MKW" firstAttribute="top" secondItem="YPO-fv-27E" secondAttribute="bottom" constant="4" id="tDR-tZ-pIa"/>
+                                                                <constraint firstItem="OaB-nq-N8i" firstAttribute="top" secondItem="gz7-J3-fsI" secondAttribute="bottom" constant="4" id="uGn-XJ-Dgy"/>
                                                                 <constraint firstItem="tth-Ch-7n7" firstAttribute="leading" secondItem="ZUk-CM-0Gk" secondAttribute="leading" id="wmL-yy-cRU"/>
                                                             </constraints>
                                                             <size key="customSize" width="222" height="116"/>
+                                                            <connections>
+                                                                <outlet property="desc" destination="YPO-fv-27E" id="C6n-6L-oOH"/>
+                                                                <outlet property="image" destination="tth-Ch-7n7" id="5oh-Tf-TZt"/>
+                                                                <outlet property="owner" destination="gz7-J3-fsI" id="XQF-NP-gyc"/>
+                                                                <outlet property="price" destination="6Y3-dd-MKW" id="XBc-A0-hQT"/>
+                                                                <outlet property="projectName" destination="OaB-nq-N8i" id="PaW-dT-JMW"/>
+                                                            </connections>
                                                         </collectionViewCell>
                                                         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="featuredLocalitiesCell" id="emJ-HL-fYY" customClass="FeaturedLocalitiesCell" customModule="Nequore" customModuleProvider="target">
                                                             <rect key="frame" x="913" y="62" width="360" height="76"/>

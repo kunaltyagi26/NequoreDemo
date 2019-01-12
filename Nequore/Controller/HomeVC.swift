@@ -174,15 +174,15 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
         case 2:
             guard let preSalesCell = collectionView.dequeueReusableCell(withReuseIdentifier: "preSalesCell", for: indexPath) as? PreSalesCell else { return UICollectionViewCell() }
             
-            preSalesCell.configureCell(imageUrl: URL(string: preSaleObj.mainImage ?? "https://httpbin.org/image/png")!, price: (preSaleObj.startingPrice ?? 0) / 1000, desc: preSaleObj.configurations?[0].config?.nameEn ?? "", owner: preSaleObj.name ?? "")
+            preSalesCell.configureCell(imageUrl: URL(string: preSaleObj.mainImage ?? "https://httpbin.org/image/png")!, price: (preSaleObj.startingPrice ?? 0) / 1000, desc: preSaleObj.configurations?[0].config?.name ?? "", owner: preSaleObj.name ?? "")
             
             cell = preSalesCell
         case 3:
-            guard let recommendedCell = collectionView.dequeueReusableCell(withReuseIdentifier: "recommendedCell", for: indexPath) as? RecommendedCell else { return UICollectionViewCell() }
+            guard let popularProjectsCell = collectionView.dequeueReusableCell(withReuseIdentifier: "popularProjectsCell", for: indexPath) as? PopularProjectsCell else { return UICollectionViewCell() }
             
-            recommendedCell.configureCell(imageUrl: URL(string: recommendedObj.image ?? "https://httpbin.org/image/png")!, address: (recommendedObj.city?.nameEn)!, description: recommendedObj.descriptionValue!, price: recommendedObj.maxPrice!)
+            popularProjectsCell.configureCell(imageUrl: URL(string: popularProj.mainImage ?? "https://httpbin.org/image/png")!, owner: popularProj.developer?.name ?? "", projectName: popularProj.name ?? "", desc: popularProj.configurations?[0].config?.name ?? "", price: (popularProj.startingPrice ?? 0) / 1000)
             
-            cell = recommendedCell
+            cell = popularProjectsCell
         case 4:
             guard let featuredLocalitiesCell = collectionView.dequeueReusableCell(withReuseIdentifier: "featuredLocalitiesCell", for: indexPath) as? FeaturedLocalitiesCell else { return UICollectionViewCell() }
             
