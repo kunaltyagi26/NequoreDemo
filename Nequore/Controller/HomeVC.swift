@@ -14,7 +14,7 @@ class HomeVC: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
-    var categories: [String] = ["Recommended", "Top Developers", "Pre-Sales", "Popular Projects", "Featured Localities"]
+    var categories: [Int:String] = [0:"Recommended", 1:"Top Developers", 2:"Pre-Sales", 3:"Popular Projects", 4:"Featured Localities"]
     
     var data: Data?
     var recommended: [Recommended] = []
@@ -41,19 +41,39 @@ class HomeVC: UIViewController {
             self.data = data
             
             guard let reco = self.data?.recommended else { return }
-            self.recommended = reco
+            if reco.count == 0 {
+                self.categories = self.categories.filter{ $1 != "Recommended" }
+            } else {
+                self.recommended = reco
+            }
             
             guard let topDev = self.data?.topDevelopers else { return }
-            self.topDevelopers = topDev
+            if topDev.count == 0 {
+                self.categories = self.categories.filter{ $1 != "Top Developers" }
+            } else {
+                self.topDevelopers = topDev
+            }
             
             guard let preS = self.data?.preSale else { return }
-            self.preSale = preS
+            if preS.count == 0 {
+                self.categories = self.categories.filter{ $1 != "Pre-Sales" }
+            } else {
+                self.preSale = preS
+            }
             
             guard let popPro = self.data?.popularProjects else { return }
-            self.popularProjects = popPro
+            if popPro.count == 0 {
+                self.categories = self.categories.filter{ $1 != "Popular Projects" }
+            } else {
+                self.popularProjects = popPro
+            }
             
             guard let featLoc = self.data?.featuredLocalities else { return }
-            self.featuredLocalities = featLoc
+            if featLoc.count == 0 {
+                self.categories = self.categories.filter{ $1 != "Featured Localities" }
+            } else {
+                self.featuredLocalities = featLoc
+            }
             
             self.stopActivityIndicator()
             self.tableView.reloadData()
@@ -133,7 +153,7 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "headerCell") as? HeaderCell else { return UITableViewCell() }
-        cell.configureCell(category: categories[section])
+        cell.configureCell(category: categories[section] ?? "")
         return cell
     }
 }

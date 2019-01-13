@@ -123,6 +123,7 @@
 		2BA1010221E4E47E0063E6F2 /* Nequore */ = {
 			isa = PBXGroup;
 			children = (
+				2BE732CB21EB516C002600CF /* Supporting Files */,
 				2BD3914621E6193B009FF0F7 /* Services */,
 				2BA1011521E4F3EF0063E6F2 /* Model */,
 				2BA1011721E4F4010063E6F2 /* View */,
@@ -194,6 +195,13 @@
 				2BD3914721E61950009FF0F7 /* DataService.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		2BE732CB21EB516C002600CF /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		5022B99A2771636B764E43C9 /* Pods */ = {

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AlamofireImage
 
 class PopularProjectsCell: UICollectionViewCell {
     @IBOutlet weak var image: UIImageView!
