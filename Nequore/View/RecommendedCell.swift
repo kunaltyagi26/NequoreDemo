@@ -24,5 +24,9 @@ class RecommendedCell: UICollectionViewCell {
         self.price.text = " $ \(price)"
         
         addressView.layer.cornerRadius = 15
+        
+        self.contentView.layer.cornerRadius = 10
+        self.contentView.layer.masksToBounds = true
+        
     }
 }

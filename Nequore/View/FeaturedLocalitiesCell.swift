@@ -17,5 +17,8 @@ class FeaturedLocalitiesCell: UICollectionViewCell {
         self.locality.text = locality
         self.price.text = "$ \(price) / sqft"
         self.numberOfProjects.text = "\(numberofProjects)"
+        
+        self.contentView.layer.cornerRadius = 10
+        self.contentView.layer.masksToBounds = true
     }
 }

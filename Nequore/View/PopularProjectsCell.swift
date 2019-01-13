@@ -21,5 +21,8 @@ class PopularProjectsCell: UICollectionViewCell {
         self.projectName.text = projectName
         self.desc.text = desc
         self.price.text = "$ \(price)K"
+        
+        self.contentView.layer.cornerRadius = 10
+        self.contentView.layer.masksToBounds = true
     }
 }

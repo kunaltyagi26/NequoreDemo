@@ -20,5 +20,8 @@ class TopDevelopersCell: UICollectionViewCell {
         self.numberOfProjects.text = "\(numberOfProjects)"
         self.developer.text = developer
         self.developerDesc.text = developerDesc
+        
+        self.contentView.layer.cornerRadius = 10
+        self.contentView.layer.masksToBounds = true
     }
 }

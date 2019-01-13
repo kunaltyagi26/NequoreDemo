@@ -23,6 +23,10 @@ class HomeVC: UIViewController {
     var popularProjects: [PopularProjects] = []
     var featuredLocalities: [FeaturedLocalities] = []
     
+    var container: UIView!
+    var loadingView: UIView!
+    var actInd: UIActivityIndicatorView!
+    
     var images: [UIImage] = []
     
     override func viewDidLoad() {
@@ -30,6 +34,8 @@ class HomeVC: UIViewController {
         
         tableView.delegate = self
         tableView.dataSource = self
+        
+        showActivityIndicator()
         
         DataService.instance.getData { (completion, data) in
             self.data = data
@@ -49,8 +55,43 @@ class HomeVC: UIViewController {
             guard let featLoc = self.data?.featuredLocalities else { return }
             self.featuredLocalities = featLoc
             
+            self.stopActivityIndicator()
             self.tableView.reloadData()
         }
+    }
+    
+    func showActivityIndicator() {
+        self.view.isUserInteractionEnabled = false
+        container = UIView()
+        container.frame = self.view.frame
+        container.center.x = self.view.center.x
+        container.center.y = self.view.center.y
+        container.backgroundColor = UIColor(red: 68/255, green: 68/255, blue: 68/255, alpha: 0.4)
+        
+        loadingView = UIView()
+        loadingView.frame = CGRect(x: 0, y: 0, width: 80, height: 80)
+        loadingView.center = self.view.center
+        loadingView.backgroundColor = UIColor(red: 68/255, green: 68/255, blue: 68/255, alpha: 0.4)
+        loadingView.clipsToBounds = true
+        loadingView.layer.cornerRadius = 10
+        
+        actInd = UIActivityIndicatorView()
+        actInd.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
+        actInd.style =
+            UIActivityIndicatorView.Style.whiteLarge
+        actInd.center =  CGPoint(x: loadingView.frame.size.width / 2, y: loadingView.frame.size.height / 2)
+        loadingView.addSubview(actInd)
+        container.addSubview(loadingView)
+        self.view.addSubview(container)
+        actInd.startAnimating()
+    }
+    
+    func stopActivityIndicator() {
+        self.view.isUserInteractionEnabled = true
+        actInd.stopAnimating()
+        actInd.removeFromSuperview()
+        loadingView.removeFromSuperview()
+        container.removeFromSuperview()
     }
 }
 
@@ -72,7 +113,7 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.section {
         case 0:
-            return self.view.frame.width * 0.70
+            return self.view.frame.width * 0.80
         case 1:
             return self.view.frame.width * 0.50
         case 2:
@@ -123,9 +164,9 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
             recommendedObj = recommended[indexPath.row]
         }
         
-        var topDev = topDevelopers[0]
+        var topDeveloper = topDevelopers[0]
         if indexPath.row < topDevelopers.count{
-            topDev = topDevelopers[indexPath.row]
+            topDeveloper = topDevelopers[indexPath.row]
         }
         
         var preSaleObj = preSale[0]
@@ -152,25 +193,20 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
         case 0:
             guard let recommendedCell = collectionView.dequeueReusableCell(withReuseIdentifier: "recommendedCell", for: indexPath) as? RecommendedCell else { return UICollectionViewCell() }
             
-            recommendedCell.configureCell(imageUrl: URL(string: recommendedObj.image ?? "https://httpbin.org/image/png")!, address: (recommendedObj.city?.nameEn)!, description: recommendedObj.descriptionValue!, price: recommendedObj.maxPrice!)
+            recommendedCell.configureCell(imageUrl: URL(string: recommendedObj.image ?? "https://httpbin.org/image/png")!, address: recommendedObj.city?.name ?? "", description: recommendedObj.descriptionValue ?? "", price: recommendedObj.minPrice ?? 0)
             
             cell = recommendedCell
         case 1:
             /*guard let topDevelopersCell = collectionView.dequeueReusableCell(withReuseIdentifier: "topDevelopersCell", for: indexPath) as? TopDevelopersCell else { return UICollectionViewCell() }
-
-            print("url:", topDev.image ?? "https://httpbin.org/image/png")
-            print("num:", topDev.buildingsCount ?? 0)
-            print("dev:", topDev.developerTitle ?? "no value")
-            print("devDesc:", topDev.developerDesc ?? "no value")
             
-            topDevelopersCell.configureCell(imageUrl: URL(string: topDev.image ?? "https://httpbin.org/image/png")!, numberOfProjects: topDev.buildingsCount ?? 0, developer: topDev.developerTitle ?? "no value", developerDesc: topDev.developerDesc ?? "no value")
+            topDevelopersCell.configureCell(imageUrl: URL(string: topDeveloper.image ?? "https://httpbin.org/image/png")!, numberOfProjects: topDeveloper.buildingsCount ?? 0, developer: topDeveloper.name ?? "", developerDesc: topDeveloper.developerTitle ?? "")
             
             cell = topDevelopersCell*/
             guard let recommendedCell = collectionView.dequeueReusableCell(withReuseIdentifier: "recommendedCell", for: indexPath) as? RecommendedCell else { return UICollectionViewCell() }
             
             recommendedCell.configureCell(imageUrl: URL(string: recommendedObj.image ?? "https://httpbin.org/image/png")!, address: (recommendedObj.city?.nameEn)!, description: recommendedObj.descriptionValue!, price: recommendedObj.maxPrice!)
             
-            cell = recommendedCell
+            cell =  recommendedCell
         case 2:
             guard let preSalesCell = collectionView.dequeueReusableCell(withReuseIdentifier: "preSalesCell", for: indexPath) as? PreSalesCell else { return UICollectionViewCell() }
             
@@ -192,6 +228,14 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
         default:
             cell = UICollectionViewCell()
         }
+        
+        cell.layer.masksToBounds = false
+        cell.layer.shadowColor = UIColor.black.cgColor
+        cell.layer.shadowOpacity = 0.3
+        cell.layer.shadowOffset = CGSize(width: 0.0, height: 3.0)
+        cell.layer.shouldRasterize = true
+        cell.layer.cornerRadius = 10
+        cell.layer.shadowRadius = 5
         
         return cell
     }
@@ -222,6 +266,10 @@ extension HomeVC: UICollectionViewDelegateFlowLayout {
         
         let itemHeight = collectionView.bounds.height - (2 * padding)
         return CGSize(width: itemWidth, height: itemHeight)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 25
     }
 }
 

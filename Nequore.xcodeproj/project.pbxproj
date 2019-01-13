@@ -140,6 +140,7 @@
 			isa = PBXGroup;
 			children = (
 				2BD3911F21E61906009FF0F7 /* Amenities.swift */,
+				2BD3914921E62146009FF0F7 /* API_JSON.swift */,
 				2BD3912421E61906009FF0F7 /* Banks.swift */,
 				2BD3912D21E61907009FF0F7 /* Blogs.swift */,
 				2BD3912021E61906009FF0F7 /* Building.swift */,
@@ -161,7 +162,6 @@
 				2BD3912E21E61907009FF0F7 /* PropertyType.swift */,
 				2BD3912B21E61907009FF0F7 /* Recommended.swift */,
 				2BD3912C21E61907009FF0F7 /* TopDevelopers.swift */,
-				2BD3914921E62146009FF0F7 /* API_JSON.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -181,9 +181,9 @@
 				2BD3911821E61634009FF0F7 /* HeaderCell.swift */,
 				2BD3914B21E63EFA009FF0F7 /* RecommendedCell.swift */,
 				2BD3914D21E77863009FF0F7 /* TopDevelopersCell.swift */,
-				2BD3914F21E8D8B8009FF0F7 /* FeaturedLocalitiesCell.swift */,
 				2BD3915121EA0BB4009FF0F7 /* PreSalesCell.swift */,
 				2BD3915321EA1CCE009FF0F7 /* PopularProjectsCell.swift */,
+				2BD3914F21E8D8B8009FF0F7 /* FeaturedLocalitiesCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
