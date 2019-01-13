@@ -138,15 +138,14 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
         if category == "Recommended" {
             return self.view.frame.width * 0.80
         } else if category == "Top Developers" {
-            return self.view.frame.width * 0.50
+            return self.view.frame.width * 0.60
         } else if category == "Pre-Sales" {
             return self.view.frame.width * 0.50
         } else if category == "Popular Projects" {
             return self.view.frame.width * 0.40
         } else if category == "Featured Localities" {
             return self.view.frame.width * 0.40
-        }
-        else {
+        } else {
             return 0
         }
     }
@@ -177,8 +176,7 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
             return popularProjects.count
         } else if category == "Featured Localities" {
             return featuredLocalities.count
-        }
-        else {
+        } else {
             return 0
         }
     }
@@ -199,17 +197,15 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
             preSaleObj = preSale[indexPath.row]
         }
         
-        var featLoc = featuredLocalities[0]
-        if indexPath.row < featuredLocalities.count {
-            featLoc = featuredLocalities[indexPath.row]
-        }
-        
         var popularProj = popularProjects[0]
         if indexPath.row < popularProjects.count {
             popularProj = popularProjects[indexPath.row]
         }
         
-        
+        var featLoc = featuredLocalities[0]
+        if indexPath.row < featuredLocalities.count {
+            featLoc = featuredLocalities[indexPath.row]
+        }
         
         var cell = UICollectionViewCell()
         
@@ -223,11 +219,11 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
             
             cell = recommendedCell
         } else if category == "Top Developers" {
-            guard let recommendedCell = collectionView.dequeueReusableCell(withReuseIdentifier: "recommendedCell", for: indexPath) as? RecommendedCell else { return UICollectionViewCell() }
+            guard let topDevelopersCell = collectionView.dequeueReusableCell(withReuseIdentifier: "topDevelopersCell", for: indexPath) as? TopDevelopersCell else { return UICollectionViewCell() }
             
-            recommendedCell.configureCell(imageUrl: URL(string: recommendedObj.image ?? "https://httpbin.org/image/png")!, address: recommendedObj.city?.name ?? "", description: recommendedObj.descriptionValue ?? "", price: recommendedObj.minPrice ?? 0)
+            topDevelopersCell.configureCell(imageUrl: URL(string: recommendedObj.image ?? "https://httpbin.org/image/png")!, numberOfProjects: topDeveloper.buildingsCount ?? 0, developer: topDeveloper.name ?? "", developerDesc: topDeveloper.developerTitle ?? "")
             
-            cell = recommendedCell
+            cell = topDevelopersCell
         } else if category == "Pre-Sales" {
             guard let preSalesCell = collectionView.dequeueReusableCell(withReuseIdentifier: "preSalesCell", for: indexPath) as? PreSalesCell else { return UICollectionViewCell() }
             
@@ -246,8 +242,7 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
             featuredLocalitiesCell.configureCell(locality: featLoc.name ?? "", price: featLoc.pricePerSqft ?? 0, numberofProjects: featLoc.buildingsCount ?? 0)
             
             cell = featuredLocalitiesCell
-        }
-        else {
+        } else {
             cell = UICollectionViewCell()
         }
         
@@ -282,8 +277,7 @@ extension HomeVC: UICollectionViewDelegateFlowLayout {
             itemWidth = self.view.bounds.width * 0.8
         } else if category == "Featured Localities" {
             itemWidth = self.view.bounds.width * 0.8
-        }
-        else {
+        } else {
             itemWidth = 0
         }
         
