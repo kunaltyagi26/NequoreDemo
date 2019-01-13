@@ -10,11 +10,15 @@ import UIKit
 import Alamofire
 import AlamofireImage
 
+class Category {
+    static var categories: [String] = ["Recommended", "Top Developers", "Pre-Sales", "Popular Projects", "Featured Localities"]
+}
+
 class HomeVC: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
-    var categories: [Int:String] = [0:"Recommended", 1:"Top Developers", 2:"Pre-Sales", 3:"Popular Projects", 4:"Featured Localities"]
+    //var categories: [String] = ["Recommended", "Top Developers", "Pre-Sales", "Popular Projects", "Featured Localities"]
     
     var data: Data?
     var recommended: [Recommended] = []
@@ -42,35 +46,35 @@ class HomeVC: UIViewController {
             
             guard let reco = self.data?.recommended else { return }
             if reco.count == 0 {
-                self.categories = self.categories.filter{ $1 != "Recommended" }
+               Category.categories = Category.categories.filter{ $0 != "Recommended" }
             } else {
                 self.recommended = reco
             }
             
             guard let topDev = self.data?.topDevelopers else { return }
             if topDev.count == 0 {
-                self.categories = self.categories.filter{ $1 != "Top Developers" }
+                Category.categories = Category.categories.filter{ $0 != "Top Developers" }
             } else {
                 self.topDevelopers = topDev
             }
             
             guard let preS = self.data?.preSale else { return }
             if preS.count == 0 {
-                self.categories = self.categories.filter{ $1 != "Pre-Sales" }
+                Category.categories = Category.categories.filter{ $0 != "Pre-Sales" }
             } else {
                 self.preSale = preS
             }
             
             guard let popPro = self.data?.popularProjects else { return }
             if popPro.count == 0 {
-                self.categories = self.categories.filter{ $1 != "Popular Projects" }
+                Category.categories = Category.categories.filter{ $0 != "Popular Projects" }
             } else {
                 self.popularProjects = popPro
             }
             
             guard let featLoc = self.data?.featuredLocalities else { return }
             if featLoc.count == 0 {
-                self.categories = self.categories.filter{ $1 != "Featured Localities" }
+                Category.categories = Category.categories.filter{ $0 != "Featured Localities" }
             } else {
                 self.featuredLocalities = featLoc
             }
@@ -121,7 +125,7 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return categories.count
+        return Category.categories.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -131,7 +135,9 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        switch indexPath.section {
+        let category: String = Category.categories[indexPath.section]
+        
+        /*switch indexPath.section {
         case 0:
             return self.view.frame.width * 0.80
         case 1:
@@ -144,6 +150,21 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
             return self.view.frame.width * 0.40
         default:
             return 0
+        }*/
+        
+        if category == "Recommended" {
+            return self.view.frame.width * 0.80
+        } else if category == "Top Developers" {
+            return self.view.frame.width * 0.50
+        } else if category == "Pre-Sales" {
+            return self.view.frame.width * 0.50
+        } else if category == "Popular Projects" {
+            return self.view.frame.width * 0.40
+        } else if category == "Featured Localities" {
+            return self.view.frame.width * 0.40
+        }
+        else {
+            return 0
         }
     }
     
@@ -153,7 +174,7 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "headerCell") as? HeaderCell else { return UITableViewCell() }
-        cell.configureCell(category: categories[section] ?? "")
+        cell.configureCell(category:Category.categories[section])
         return cell
     }
 }
@@ -161,8 +182,9 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
 extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let index = collectionView.tag
+        let category: String = Category.categories[index]
         
-        switch index {
+        /*switch index {
         case 0:
             return recommended.count
         case 1:
@@ -174,6 +196,21 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
         case 4:
             return featuredLocalities.count
         default:
+            return 0
+        }*/
+        
+        if category == "Recommended" {
+            return recommended.count
+        } else if category == "Top Developers" {
+            return topDevelopers.count
+        } else if category == "Pre-Sales" {
+            return preSale.count
+        } else if category == "Popular Projects" {
+            return popularProjects.count
+        } else if category == "Featured Localities" {
+            return featuredLocalities.count
+        }
+        else {
             return 0
         }
     }
@@ -205,11 +242,48 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
         }
         
         
+        
         var cell = UICollectionViewCell()
         
         let index = collectionView.tag
+        let category: String = Category.categories[index]
         
-        switch index {
+        if category == "Recommended" {
+            guard let recommendedCell = collectionView.dequeueReusableCell(withReuseIdentifier: "recommendedCell", for: indexPath) as? RecommendedCell else { return UICollectionViewCell() }
+            
+            recommendedCell.configureCell(imageUrl: URL(string: recommendedObj.image ?? "https://httpbin.org/image/png")!, address: recommendedObj.city?.name ?? "", description: recommendedObj.descriptionValue ?? "", price: recommendedObj.minPrice ?? 0)
+            
+            cell = recommendedCell
+        } else if category == "Top Developers" {
+            guard let recommendedCell = collectionView.dequeueReusableCell(withReuseIdentifier: "recommendedCell", for: indexPath) as? RecommendedCell else { return UICollectionViewCell() }
+            
+            recommendedCell.configureCell(imageUrl: URL(string: recommendedObj.image ?? "https://httpbin.org/image/png")!, address: recommendedObj.city?.name ?? "", description: recommendedObj.descriptionValue ?? "", price: recommendedObj.minPrice ?? 0)
+            
+            cell = recommendedCell
+        } else if category == "Pre-Sales" {
+            guard let preSalesCell = collectionView.dequeueReusableCell(withReuseIdentifier: "preSalesCell", for: indexPath) as? PreSalesCell else { return UICollectionViewCell() }
+            
+            preSalesCell.configureCell(imageUrl: URL(string: preSaleObj.mainImage ?? "https://httpbin.org/image/png")!, price: (preSaleObj.startingPrice ?? 0) / 1000, desc: preSaleObj.configurations?[0].config?.name ?? "", owner: preSaleObj.name ?? "")
+            
+            cell = preSalesCell
+        } else if category == "Popular Projects" {
+            guard let popularProjectsCell = collectionView.dequeueReusableCell(withReuseIdentifier: "popularProjectsCell", for: indexPath) as? PopularProjectsCell else { return UICollectionViewCell() }
+            
+            popularProjectsCell.configureCell(imageUrl: URL(string: popularProj.mainImage ?? "https://httpbin.org/image/png")!, owner: popularProj.developer?.name ?? "", projectName: popularProj.name ?? "", desc: popularProj.configurations?[0].config?.name ?? "", price: (popularProj.startingPrice ?? 0) / 1000)
+            
+            cell = popularProjectsCell
+        } else if category == "Featured Localities" {
+            guard let featuredLocalitiesCell = collectionView.dequeueReusableCell(withReuseIdentifier: "featuredLocalitiesCell", for: indexPath) as? FeaturedLocalitiesCell else { return UICollectionViewCell() }
+            
+            featuredLocalitiesCell.configureCell(locality: featLoc.name ?? "", price: featLoc.pricePerSqft ?? 0, numberofProjects: featLoc.buildingsCount ?? 0)
+            
+            cell = featuredLocalitiesCell
+        }
+        else {
+            cell = UICollectionViewCell()
+        }
+        
+        /*switch index {
         case 0:
             guard let recommendedCell = collectionView.dequeueReusableCell(withReuseIdentifier: "recommendedCell", for: indexPath) as? RecommendedCell else { return UICollectionViewCell() }
             
@@ -247,7 +321,7 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
             cell = featuredLocalitiesCell
         default:
             cell = UICollectionViewCell()
-        }
+        }*/
         
         cell.layer.masksToBounds = false
         cell.layer.shadowColor = UIColor.black.cgColor
@@ -268,8 +342,24 @@ extension HomeVC: UICollectionViewDelegateFlowLayout {
         var itemWidth: CGFloat = 0.0
         
         let index = collectionView.tag
+        let category: String = Category.categories[index]
         
-        switch index {
+        if category == "Recommended" {
+            itemWidth = self.view.bounds.width * 0.7
+        } else if category == "Top Developers" {
+            itemWidth = self.view.bounds.width * 0.5
+        } else if category == "Pre-Sales" {
+            itemWidth = self.view.bounds.width * 0.9
+        } else if category == "Popular Projects" {
+            itemWidth = self.view.bounds.width * 0.8
+        } else if category == "Featured Localities" {
+            itemWidth = self.view.bounds.width * 0.8
+        }
+        else {
+            itemWidth = 0
+        }
+        
+        /*switch index {
         case 0:
             itemWidth = self.view.bounds.width * 0.7
         case 1:
@@ -282,7 +372,7 @@ extension HomeVC: UICollectionViewDelegateFlowLayout {
             itemWidth = self.view.bounds.width * 0.8
         default:
             itemWidth = 0
-        }
+        }*/
         
         let itemHeight = collectionView.bounds.height - (2 * padding)
         return CGSize(width: itemWidth, height: itemHeight)
